@@ -1,0 +1,54 @@
+#include "HuffmanTree.hpp"
+
+string HuffmanTree::serializeTree() const {
+    return serialize;
+}
+
+// Recursive function to traverse through binary tree
+void HuffmanTree::postOrder(HuffmanNode* root){
+    if(root == NULL){
+        postOrder(root->left);
+        postOrder(root->right);
+    }
+
+    if(root->isLeaf()){
+        serialize.push_back('L');
+        serialize.push_back(root->getCharacter());
+    }
+
+    else serialize.push_back('B');
+}
+
+string HuffmanTree::compress(const string inputStr){
+    map<char, int> frequency;
+    map<char, string> charMap;
+    string output = "";
+    int count = 0;
+
+    for(int i=0; i<inputStr.length(); ++i){
+        frequency[inputStr[i]]++;
+    }
+
+    for(auto tempNode : frequency){
+        heap.insert(new HuffmanNode(tempNode.first, tempNode.second));
+    }
+
+    while(heap.size() > 1){
+        HuffmanNode* left = heap.min();
+        heap.removeMin();
+
+        HuffmanNode* right = heap.min();
+        heap.removeMin();
+
+        count = left->getFrequency() + right->getFrequency();
+        heap.insert(new HuffmanNode('\0', count, tempNode, left, right))
+    }
+
+    HuffmanNode* root = heap.min();
+    postOrder(root);
+    compute(root, "", charMap);
+
+    for (int i=0; i<inputStr.length(); ++i){
+        
+    }
+}
