@@ -1,9 +1,11 @@
-#ifndef HUFFMANTREE_HPP
-#define HUFFMANTREE_HPP
+#ifndef HUFFMANTREE_H
+#define HUFFMANTREE_H
 
 #include "HuffmanBase.hpp"
 #include "HeapQueue.hpp"
+#include <iostream>
 #include <map>
+#include <stack>
 
 class HuffmanTree : HuffmanTreeBase {
     private:
@@ -25,20 +27,20 @@ class HuffmanTree : HuffmanTreeBase {
 
         }
 
-        //recursive function to revursively serialize the Huffman Tree (done in postorder Traversal)
+        // Helper function to recursively serialize the Huffman Tree in postorder traversal
         void serialize(const HuffmanNode* node, std::string& outString) const {
-            if (node == nullptr) 
-                return;
+            if (node == nullptr) return;
             
             serialize(node->left, outString);
             serialize(node->right, outString);
 
-            if (node->isLeaf())
-                outString = outString + "L" + node->getCharacter();
-            if (node->isBranch()) 
-                outString += "B";
+            // If node is a leaf
+            if (node->isLeaf()) outString = outString + "L" + node->getCharacter();
+
+            // If node is a branch
+            if (node->isBranch()) outString += "B";
         }
 
 };
 
-#endif /*HUFFMANTREE_HPP*/
+#endif /*HUFFMANTREE_H*/
